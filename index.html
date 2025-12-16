@@ -1,0 +1,435 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Metode Pembayaran</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: 'Segoe UI', system-ui, sans-serif;
+        }
+        body {
+            background-color: #f0f2f5; /* Abu-abu muda */
+            color: #333;
+            line-height: 1.6;
+            min-height: 100vh;
+            padding: 20px;
+        }
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+            background-color: #ffffff;
+            border-radius: 20px;
+            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.08);
+            overflow: hidden;
+        }
+        header {
+            background: linear-gradient(135deg, #5d6d7e 0%, #34495e 100%);
+            color: white;
+            text-align: center;
+            padding: 40px 20px;
+            position: relative;
+        }
+        .profile-section {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            margin-bottom: 20px;
+        }
+        .profile-img {
+            width: 140px;
+            height: 140px;
+            border-radius: 50%;
+            object-fit: cover;
+            border: 6px solid rgba(255, 255, 255, 0.3);
+            box-shadow: 0 8px 20px rgba(0, 0, 0, 0.2);
+            margin-bottom: 20px;
+            background-color: #e0e0e0; /* Placeholder abu-abu */
+        }
+        header h1 {
+            font-size: 2.2rem;
+            margin-bottom: 10px;
+            font-weight: 700;
+        }
+        header p {
+            font-size: 1.1rem;
+            opacity: 0.9;
+            max-width: 600px;
+            margin: 0 auto;
+        }
+        .content {
+            padding: 30px;
+            background-color: #f8f9fa; /* Abu-abu sangat muda untuk konten */
+        }
+        .section-title {
+            font-size: 1.8rem;
+            color: #2c3e50;
+            margin-bottom: 25px;
+            padding-bottom: 15px;
+            border-bottom: 2px solid #eaeaea;
+            text-align: center;
+        }
+        .payment-methods {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(320px, 1fr));
+            gap: 25px;
+            margin-bottom: 50px;
+        }
+        .payment-card {
+            background: white;
+            border-radius: 16px;
+            padding: 25px;
+            box-shadow: 0 6px 18px rgba(0, 0, 0, 0.05);
+            transition: all 0.3s ease;
+            border: 1px solid #edf2f7;
+        }
+        .payment-card:hover {
+            transform: translateY(-8px);
+            box-shadow: 0 12px 24px rgba(0, 0, 0, 0.1);
+        }
+        .payment-header {
+            display: flex;
+            align-items: center;
+            margin-bottom: 22px;
+        }
+        .payment-icon {
+            width: 56px;
+            height: 56px;
+            border-radius: 12px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            margin-right: 18px;
+            font-size: 1.8rem;
+            color: white;
+        }
+        .dana-bg { background: linear-gradient(135deg, #00a3e0, #0087c1); }
+        .gopay-bg { background: linear-gradient(135deg, #00aa13, #008c10); }
+        .shopeepay-bg { background: linear-gradient(135deg, #f7323f, #d62935); }
+        .ovo-bg { background: linear-gradient(135deg, #4c2a86, #3a1f65); }
+        .seabank-bg { background: linear-gradient(135deg, #0d5ea0, #0a4a80); }
+        .payment-header h3 {
+            font-size: 1.5rem;
+            color: #2d3748;
+            font-weight: 600;
+        }
+        .payment-number {
+            font-size: 1.3rem;
+            font-weight: 700;
+            color: #1a202c;
+            background-color: #f7fafc;
+            padding: 15px;
+            border-radius: 10px;
+            text-align: center;
+            margin-bottom: 20px;
+            border: 1px dashed #cbd5e0;
+            letter-spacing: 0.5px;
+            word-break: break-all;
+        }
+        .copy-btn {
+            width: 100%;
+            padding: 14px;
+            background: linear-gradient(135deg, #5d6d7e, #4a5568);
+            color: white;
+            border: none;
+            border-radius: 10px;
+            font-size: 1rem;
+            font-weight: 600;
+            cursor: pointer;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            transition: all 0.3s ease;
+        }
+        .copy-btn:hover {
+            background: linear-gradient(135deg, #4a5568, #2d3748);
+            transform: scale(1.02);
+        }
+        .copy-btn i {
+            margin-right: 10px;
+            font-size: 1.1rem;
+        }
+        .qris-container {
+            display: flex;
+            flex-wrap: wrap;
+            justify-content: center;
+            gap: 35px;
+            margin-bottom: 50px;
+        }
+        .qris-card {
+            background: white;
+            border-radius: 18px;
+            padding: 30px;
+            box-shadow: 0 8px 22px rgba(0, 0, 0, 0.06);
+            max-width: 500px;
+            width: 100%;
+            text-align: center;
+            border: 1px solid #e2e8f0;
+        }
+        .qris-card h3 {
+            color: #2c3e50;
+            margin-bottom: 25px;
+            font-size: 1.6rem;
+        }
+        .qris-image {
+            width: 100%;
+            max-width: 300px;
+            border-radius: 12px;
+            border: 1px solid #e2e8f0;
+            margin-bottom: 20px;
+            background-color: #e0e0e0; /* Placeholder abu-abu */
+            min-height: 300px;
+        }
+        .qris-desc {
+            color: #4a5568;
+            font-size: 0.95rem;
+            margin-top: 10px;
+            padding: 12px;
+            background-color: #f8f9fa;
+            border-radius: 8px;
+        }
+        .note-box {
+            background: linear-gradient(135deg, #fff9e6, #fff3cd);
+            border-left: 6px solid #ffc107;
+            padding: 22px;
+            border-radius: 12px;
+            margin-top: 40px;
+            font-size: 1rem;
+            color: #856404;
+            box-shadow: 0 4px 12px rgba(0, 0, 0, 0.03);
+        }
+        .note-box h4 {
+            margin-bottom: 10px;
+            font-size: 1.2rem;
+            display: flex;
+            align-items: center;
+        }
+        .note-box h4 i {
+            margin-right: 10px;
+        }
+        footer {
+            text-align: center;
+            padding: 25px;
+            background-color: #2c3e50;
+            color: #ecf0f1;
+            margin-top: 40px;
+            font-size: 0.95rem;
+        }
+        .notification {
+            position: fixed;
+            top: 30px;
+            right: 30px;
+            background: #2ecc71;
+            color: white;
+            padding: 18px 25px;
+            border-radius: 12px;
+            box-shadow: 0 8px 20px rgba(0, 0, 0, 0.15);
+            display: none;
+            z-index: 1000;
+            font-weight: 500;
+            animation: fadeIn 0.3s ease;
+        }
+        @keyframes fadeIn {
+            from { opacity: 0; transform: translateY(-10px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+        @media (max-width: 768px) {
+            .payment-methods {
+                grid-template-columns: 1fr;
+            }
+            .qris-container {
+                flex-direction: column;
+                align-items: center;
+            }
+            .qris-card {
+                max-width: 100%;
+            }
+            header h1 {
+                font-size: 1.8rem;
+            }
+            .payment-number {
+                font-size: 1.15rem;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <header>
+            <div class="profile-section">
+                <img src="https://files.catbox.moe/a67net.jpg" alt="Profile" class="profile-img" onerror="this.style.display='none'; this.parentNode.innerHTML+='<div class=\'profile-img\' style=\'display:flex; align-items:center; justify-content:center; color:#777; font-size:0.8rem;\'>Gambar Profil<br>Tidak Tersedia</div>'">
+                <h1>Metode Pembayaran</h1>
+                <p>Gunakan salah satu metode di bawah ini untuk melakukan pembayaran. Salin nomor atau scan QRIS.</p>
+            </div>
+        </header>
+
+        <div class="content">
+            <h2 class="section-title">Transfer Langsung</h2>
+            <div class="payment-methods">
+                <!-- DANA -->
+                <div class="payment-card">
+                    <div class="payment-header">
+                        <div class="payment-icon dana-bg">
+                            <i class="fas fa-wallet"></i>
+                        </div>
+                        <h3>DANA</h3>
+                    </div>
+                    <div class="payment-details">
+                        <div class="payment-number" id="dana-number">085796707046</div>
+                        <button class="copy-btn" onclick="copyNumber('dana-number')">
+                            <i class="fas fa-copy"></i> Salin Nomor
+                        </button>
+                    </div>
+                </div>
+
+                <!-- GoPay -->
+                <div class="payment-card">
+                    <div class="payment-header">
+                        <div class="payment-icon gopay-bg">
+                            <i class="fas fa-money-bill-wave"></i>
+                        </div>
+                        <h3>GoPay</h3>
+                    </div>
+                    <div class="payment-details">
+                        <div class="payment-number" id="gopay-number">085624490450</div>
+                        <button class="copy-btn" onclick="copyNumber('gopay-number')">
+                            <i class="fas fa-copy"></i> Salin Nomor
+                        </button>
+                    </div>
+                </div>
+
+                <!-- ShopeePay -->
+                <div class="payment-card">
+                    <div class="payment-header">
+                        <div class="payment-icon shopeepay-bg">
+                            <i class="fas fa-shopping-bag"></i>
+                        </div>
+                        <h3>ShopeePay</h3>
+                    </div>
+                    <div class="payment-details">
+                        <div class="payment-number" id="shopeepay-number">085624490450</div>
+                        <button class="copy-btn" onclick="copyNumber('shopeepay-number')">
+                            <i class="fas fa-copy"></i> Salin Nomor
+                        </button>
+                    </div>
+                </div>
+
+                <!-- OVO -->
+                <div class="payment-card">
+                    <div class="payment-header">
+                        <div class="payment-icon ovo-bg">
+                            <i class="fas fa-mobile-alt"></i>
+                        </div>
+                        <h3>OVO</h3>
+                    </div>
+                    <div class="payment-details">
+                        <div class="payment-number" id="ovo-number">085624490450</div>
+                        <button class="copy-btn" onclick="copyNumber('ovo-number')">
+                            <i class="fas fa-copy"></i> Salin Nomor
+                        </button>
+                    </div>
+                </div>
+
+                <!-- SeaBank -->
+                <div class="payment-card">
+                    <div class="payment-header">
+                        <div class="payment-icon seabank-bg">
+                            <i class="fas fa-university"></i>
+                        </div>
+                        <h3>SeaBank</h3>
+                    </div>
+                    <div class="payment-details">
+                        <div class="payment-number" id="seabank-number">901517983069</div>
+                        <button class="copy-btn" onclick="copyNumber('seabank-number')">
+                            <i class="fas fa-copy"></i> Salin Nomor Rekening
+                        </button>
+                    </div>
+                </div>
+            </div>
+
+            <h2 class="section-title">Pembayaran QRIS</h2>
+            <div class="qris-container">
+                <!-- QRIS 1: Dana -->
+                <div class="qris-card">
+                    <h3>QRIS Khusus DANA</h3>
+                    <img src="https://files.catbox.moe/70sirg.jpg" alt="QRIS Dana" class="qris-image" onerror="this.style.display='none'; this.parentNode.innerHTML+='<div style=\'width:100%; height:300px; display:flex; flex-direction:column; align-items:center; justify-content:center; background-color:#e0e0e0; border-radius:12px; color:#777; margin-bottom:20px;\'><i class=\'fas fa-qrcode\' style=\'font-size:3rem; margin-bottom:15px;\'></i><p>QRIS Dana Tidak Dapat Dimuat</p><p style=\'font-size:0.8rem; margin-top:5px;\'>Cek koneksi atau tautan</p></div>'">
+                    <p class="qris-desc">Scan QR di atas untuk pembayaran via DANA hanya. Pastikan saldo DANA mencukupi.</p>
+                </div>
+
+                <!-- QRIS 2: Rekber/Umum -->
+                <div class="qris-card">
+                    <h3>QRIS Umum / Rekber</h3>
+                    <img src="https://files.catbox.moe/gaem1j.jpg" alt="QRIS Umum" class="qris-image" onerror="this.style.display='none'; this.parentNode.innerHTML+='<div style=\'width:100%; height:300px; display:flex; flex-direction:column; align-items:center; justify-content:center; background-color:#e0e0e0; border-radius:12px; color:#777; margin-bottom:20px;\'><i class=\'fas fa-qrcode\' style=\'font-size:3rem; margin-bottom:15px;\'></i><p>QRIS Umum Tidak Dapat Dimuat</p><p style=\'font-size:0.8rem; margin-top:5px;\'>Cek koneksi atau tautan</p></div>'">
+                    <p class="qris-desc">Scan QR di atas untuk pembayaran via berbagai dompet digital atau mobile banking (untuk rekber).</p>
+                </div>
+            </div>
+
+            <div class="note-box">
+                <h4><i class="fas fa-info-circle"></i> Penting untuk Diperhatikan</h4>
+                <p>• Setelah melakukan pembayaran, harap simpan bukti transfer (screenshot) dan kirimkan ke penjual.</p>
+                <p>• QRIS Khusus DANA hanya bisa digunakan oleh pengguna DANA. QRIS Umum bisa digunakan berbagai aplikasi.</p>
+                <p>• Pastikan nomor tujuan atau QRIS sudah benar sebelum melakukan transaksi.</p>
+                <p>• Untuk rekber, disarankan menggunakan QRIS Umum atau transfer langsung ke SeaBank.</p>
+            </div>
+        </div>
+
+        <footer>
+            <p>&copy; <span id="currentYear"></span> Metode Pembayaran. Semua informasi di atas valid dan dapat digunakan.</p>
+            <p style="margin-top: 8px; font-size: 0.85rem; opacity: 0.8;">Hubungi penjual untuk konfirmasi pembayaran.</p>
+        </footer>
+    </div>
+
+    <div class="notification" id="notification">Nomor berhasil disalin!</div>
+
+    <script>
+        // Tahun saat ini di footer
+        document.getElementById('currentYear').textContent = new Date().getFullYear();
+
+        // Fungsi untuk menyalin nomor
+        function copyNumber(elementId) {
+            const numberElement = document.getElementById(elementId);
+            const numberText = numberElement.innerText;
+            
+            // Gunakan Clipboard API modern
+            navigator.clipboard.writeText(numberText).then(() => {
+                showNotification('Nomor berhasil disalin ke clipboard!');
+            }).catch(err => {
+                // Fallback untuk browser lama
+                const textArea = document.createElement('textarea');
+                textArea.value = numberText;
+                document.body.appendChild(textArea);
+                textArea.select();
+                document.execCommand('copy');
+                document.body.removeChild(textArea);
+                showNotification('Nomor berhasil disalin!');
+            });
+        }
+
+        // Tampilkan notifikasi
+        function showNotification(message) {
+            const notification = document.getElementById('notification');
+            notification.innerText = message;
+            notification.style.display = 'block';
+            notification.style.background = '#2ecc71';
+            
+            setTimeout(() => {
+                notification.style.display = 'none';
+            }, 3000);
+        }
+
+        // Efek visual saat tombol diklik
+        document.querySelectorAll('.copy-btn').forEach(button => {
+            button.addEventListener('click', function() {
+                this.style.transform = 'scale(0.98)';
+                setTimeout(() => {
+                    this.style.transform = '';
+                }, 200);
+            });
+        });
+    </script>
+</body>
+</html>
